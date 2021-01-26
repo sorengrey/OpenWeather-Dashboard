@@ -19,24 +19,31 @@
             <h1>Weather Dashboard</h1>
         </span>
 
-        <!-- search bar and history -->
-        <container class="left-aside">
-            <aside>
-                <!-- the search form -->
-                <label for="floatingInput">Search for a City:</label><br>
-                <input class="form-control form-control-lg" type="text" aria-label=".form-control-lg example">
+        <!-- search field and history -->
+        <div class="container-fluid">
+            <div class="row">
+              <aside>
+                <!-- the search field -->
+                <label for="form-inline">Search for a City:</label><br>
+                <input class="form-inline" type="text">
                 <!-- the search button -->
-                <button type="button" class="btn btn-primary"> <i class="fas fa-search"></i></button>
-            </aside>       
-        </container>
+                <button type="button" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div> 
+                <!-- search history list -->
+                <ul class="historylist"></ul>
+              </aside>
+                
 
         <!-- current weather and five-day forecast -->
-        <container class="main-section">
-            <div class="row">
-                <div></div>
-                <div></div>
+            <div class="col">
+                <!-- today's forecast -->
+                <div class="currentday"></div>
+                <!-- five day forecast -->
+                <div class="fiveday"></div>
             </div>
-        </container>
+        </div>
 
         <script src="./assets/script.js"></script>
     </body>
