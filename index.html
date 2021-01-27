@@ -25,9 +25,9 @@
               <aside>
                 <!-- the search field -->
                 <label for="form-inline">Search for a City:</label><br>
-                <input class="form-inline" type="text">
+                <input class="form-inline" id="search" type="text">
                 <!-- the search button -->
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="searchbutton">
                     <i class="fas fa-search"></i>
                 </button>
             </div> 
@@ -37,7 +37,7 @@
                 
 
         <!-- current weather and five-day forecast -->
-            <div class="col">
+            <div class="col-lg-9">
                 <!-- today's forecast -->
                 <div class="currentday"></div>
                 <!-- five day forecast -->
@@ -45,6 +45,8 @@
             </div>
         </div>
 
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="./assets/script.js"></script>
     </body>
 </html>
