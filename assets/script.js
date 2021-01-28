@@ -10,7 +10,7 @@ $(document).ready(function() {
     // ajax call that gets city's current weather info
     $.ajax({
      type: "GET",
-     url: "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
+     url: "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
      dataType: "json",
      success: (function(data){
     // variables for the current weather conditions
@@ -38,11 +38,12 @@ $(document).ready(function() {
 
 // get UV index
 
-// ajax call that gets the city's five-day forecast
+// five day forecast function
 function getFiveDay(input){
+  // ajax call that gets the city's five-day forecast
   $.ajax({
      type: "GET",
-     url: "http://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
+     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
      dataType: "json",
      success: (function(data){
        console.log(data);
@@ -57,7 +58,7 @@ function getFiveDay(input){
         // changes the dt code to something readable
         var date = $("<p>").addClass("date").text(new Date(data.list[i].dt_txt).toLocaleDateString());
         // weather icons
-        var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+        var icon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
         // temperature
         var temp = $("<p>").addClass("temp").text("Temp: " + data.list[i].main.temp + "°F");
         // humidity
@@ -72,12 +73,13 @@ function getFiveDay(input){
   })
 }
 
-
 // creates list elements and adds searched-for cities to the history list
 function addCities(text) {
   var searchedCity = $("<li>").addClass("list-group-item").text(text);
   $(".historylist").append(searchedCity);
 }
+
+//function calls
 addCities(input);
 getFiveDay(input);
 })
