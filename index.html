@@ -20,32 +20,37 @@
         </span>
 
         <!-- search field and history -->
-        <div class="container-fluid search-field">
+        <div class="container-fluid">
             <div class="row">
-              <aside class="col-sm">
+              <aside class="col-3">
                 <!-- the search field -->
-                <label for="form-inline">Search for a City:</label><br>
+                <label for="form-inline">Search for a City:</label>
+                <br>
                 <input class="form-inline" id="search" type="text">
                 <!-- the search button -->
                 <button type="button" class="btn btn-primary" id="searchbutton">
                     <i class="fas fa-search"></i>
                 </button>
-            </div> 
+                <br>
+            
                 <!-- search history list -->
-                <ul class="list-group historylist"></ul>
+                <ul class="col-sm list-group historylist"></ul>
               </aside>
                 
 
         <!-- current weather and five-day forecast -->
-            <div class="col-lg-9 weather">
+            <div class="col-lg-9">
+                <div class="row">
                 <!-- today's forecast -->
-                <div class="col-3 currentday">
-                </div>
+                <div class="currentday mt-3">
+                </div></div>
+            
                 <!-- five day forecast -->
-                <div class="col-3 fiveday">
-                </div>
+                <div class="row fiveday">
+                </div></div>
             </div>
-        </div>
+        </div> 
+     
         
 
         <!-- jQuery -->
