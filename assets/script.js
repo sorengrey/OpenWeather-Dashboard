@@ -6,6 +6,9 @@ $(document).ready(function() {
     var input = $("#search").val();
     // saves the searched-for city in local storage
     localStorage.setItem("city:", input);
+    // sets the locally stores cities to list elements 
+    var history = $("<li>").addClass("list-group-item list-group-item-action").text(localStorage.getItem("city:"))
+    $(".historylist").prepend(history);
 
     // ajax call that gets city's current weather info
     $.ajax({
@@ -36,7 +39,7 @@ $(document).ready(function() {
 
 // function to clear divs so the user can search again without breaking the layout
 
-// get UV index
+// get UV index function
 
 // five day forecast function
 function getFiveDay(input){
@@ -48,39 +51,41 @@ function getFiveDay(input){
      success: (function(data){
        console.log(data);
        // deletes forecasts from the previous search
-      // $("#weather").empty();
+       $("#weather").empty();
        // loops through the forecast object to add cards
        for (var i = 0; i < data.list.length; i++) {
          // only grabs data from the forecast object after 3pm since there are three arrays for each day
         if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-        var fiveCard = $("<div>").addClass("card");
-        var fiveCardBody = $("<div>").addClass("card-body");
-        // changes the dt code to something readable
-        var date = $("<p>").addClass("date").text(new Date(data.list[i].dt_txt).toLocaleDateString());
-        // weather icons
-        var icon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
-        // temperature
-        var temp = $("<p>").addClass("temp").text("Temp: " + data.list[i].main.temp + "°F");
-        // humidity
-        var humid = $("<p>").addClass("humid").text("Humidity: " + data.list[i].main.humidity + "%");
-        // adds info to card's bodies
-        fiveCard.append(fiveCardBody).append(date, icon, temp, humid);
-        // adds cards to fiveday div
-        $(".fiveday").append(fiveCard);
+          // gets the date
+          var todaysDate = new Date(data.list[i].dt_txt).toLocaleDateString();
+          console.log(todaysDate)
+           // card
+          var fiveCard = $("<div>").addClass("card bg-primary mb-3 text-white");
+           // card body
+          var fiveCardBody = $("<div>").addClass("card-body p-2");
+          // changes the dt code to a readable date
+          var date = $("<h3>").addClass("card-title date").text(todaysDate);
+          // weather icons
+          var icon = $("<img>").addClass("card-img").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+          // temperatures
+          var temp = $("<p>").addClass("card-text temp").text("Temp: " + data.list[i].main.temp + "°F");
+          // humidities
+          var humid = $("<p>").addClass("card-text humid").text("Humidity: " + data.list[i].main.humidity + "%");
+          // adds columns for the cards to go in
+          var columns = $("<div>").addClass("col-md-2");
+         // adds info to card's bodies
+         columns.append(fiveCard.append(fiveCardBody).append(date, icon, temp, humid));
+         // adds cards to fiveday div
+         $(".fiveday").append(columns);
         }
       }
      })
   })
 }
 
-// creates list elements and adds searched-for cities to the history list
-function addCities(text) {
-  var searchedCity = $("<li>").addClass("list-group-item").text(text);
-  $(".historylist").append(searchedCity);
-}
 
 //function calls
-addCities(input);
 getFiveDay(input);
 })
   })
+ 
