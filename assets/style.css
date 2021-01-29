@@ -8,3 +8,21 @@ h1 {
     padding-top: 8px;
     padding-bottom: 8px;
  }
+ 
+ label {
+     font-weight: bold;
+     font-size: 18px;
+ }
+
+.card-img {
+    height: 50px;
+    width: 50px;
+}
+
+.card-text, .card-img, .card-title, .card-body {
+    padding-left: 4px;
+}
+
+ul {
+    padding-top: 7px;
+}
