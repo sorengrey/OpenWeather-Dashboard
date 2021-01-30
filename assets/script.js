@@ -29,36 +29,33 @@ $(document).ready(function() {
       var currentTemp = $("<p>").text("Temperature: " + data.main.temp + "°F");
       var currentHumid = $("<p>").text("Humidity: " + data.main.humidity + "%");
       var currentWind = $("<p>").text("Wind Speed: " + data.wind.speed + "MPH");
-      var currentUV = $("<p>").text("UV Index: ");
+      
       // the card's body
       var cardInfo = $("<div>").addClass("card-body");
       // UV Button still needs to be set up
       var uvButton = $("<button>").addClass("uv-button");
       // the card
       var addCard = $("<div>").addClass("card");
-      // adds all the weather info to the card body
-      cardInfo.append(currentCity, currentTemp, currentHumid, currentWind, currentUV);
-      // adds the card body's info to the card
-      addCard.append(cardInfo);
+     
       // adds the card to the currentday div
       $(".currentday").append(addCard);
-      //
-      var UV = getUV(latitude, longitude);
-     })
-    })
-
-     // get UV index
-     function getUV(latitude, longitude){
+      // 
       $.ajax({
         type: "GET",
-        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
+        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
         dataType: "json",
         success: (function(data){
-          console.log(data);
-          return //json uv value
+          console.log(data.value);
+          // var UV = da/ta.value;
+          var currentUV = $("<p>").text("UV Index: " + data.value);
+          // adds all the weather info to the card body
+         cardInfo.append(currentCity, currentTemp, currentHumid, currentWind, currentUV);
+          // adds the card body's info to the card
+         addCard.append(cardInfo);
          })
 })
-}
+     })
+    })
 
 // five day forecast function
 function getFiveDay(input){
