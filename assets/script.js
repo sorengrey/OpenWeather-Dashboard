@@ -51,7 +51,7 @@ $(document).ready(function() {
      function getUV(latitude, longitude){
       $.ajax({
         type: "GET",
-        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
+        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
         dataType: "json",
         success: (function(data){
           console.log(data);
