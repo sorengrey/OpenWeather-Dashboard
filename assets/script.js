@@ -47,7 +47,7 @@ $(document).ready(function() {
       // ajax call that gets the UV info
       $.ajax({
         type: "GET",
-        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
+        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
         dataType: "json",
         success: (function(data){
           // gets UV index value and sets it as a variable
@@ -96,14 +96,14 @@ $(document).ready(function() {
           // adds cards to fiveday div
           $(".fiveday").append(columns);
         }
-        }
-      })
-        })
+      }
+     })
+     })
       }
      
 //function calls
 getFiveDay(input);
 
       })
-    })
+})
    
