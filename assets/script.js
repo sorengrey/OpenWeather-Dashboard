@@ -21,45 +21,64 @@ $(document).ready(function() {
      url: "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
      dataType: "json",
      success: (function(data){
-      // empties the current day's div if there is already a city listed
-      $(".currentday").empty();
+        // empties the current day's div if there is already a city listed
+        $(".currentday").empty();
 
-      // variables for the UV index URL parameters
-      var latitude = data.coord.lat;
-      var longitude = data.coord.lon;
+        // variables for the UV index URL parameters
+        var latitude = data.coord.lat;
+        var longitude = data.coord.lon;
 
-      // variables for the current weather conditions
-      var currentCity = $("<h2>").addClass("card-current").text(data.name + " (" + new Date().toLocaleDateString() + ")");
-      var currentTemp = $("<p>").text("Temperature: " + data.main.temp + "°F");
-      var currentHumid = $("<p>").text("Humidity: " + data.main.humidity + "%");
-      var currentWind = $("<p>").text("Wind Speed: " + data.wind.speed + "MPH");
+        // variables for the current weather conditions
+        var currentCity = $("<h2>").addClass("card-current").text(data.name + " (" + new Date().toLocaleDateString() + ")");
+        var currentTemp = $("<p>").text("Temperature: " + data.main.temp + "°F");
+        var currentHumid = $("<p>").text("Humidity: " + data.main.humidity + "%");
+        var currentWind = $("<p>").text("Wind Speed: " + data.wind.speed + "MPH");
+        
+        // the card's body
+        var cardInfo = $("<div>").addClass("card-body");
       
-      // the card's body
-      var cardInfo = $("<div>").addClass("card-body");
-      // UV Button still needs to be set up
-      var uvButton = $("<button>").addClass("uv-button");
-      // the card
-      var addCard = $("<div>").addClass("card");
-     
-      // adds the card to the currentday div
-      $(".currentday").append(addCard);
+        // the card
+        var addCard = $("<div>").addClass("card");
+      
+        // adds the card to the currentday div
+        $(".currentday").append(addCard);
 
-      // ajax call that gets the UV info
-      $.ajax({
-        type: "GET",
-        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
-        dataType: "json",
-        success: (function(data){
-          // gets UV index value and sets it as a variable
-          var currentUV = $("<p>").text("UV Index: " + data.value);
-          // adds all the weather info to the card body
-         cardInfo.append(currentCity, currentTemp, currentHumid, currentWind, currentUV);
-          // adds the card body's info to the card
-         addCard.append(cardInfo);
-         })
+        // ajax call that gets the UV info
+        $.ajax({
+          type: "GET",
+          url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
+          dataType: "json",
+          success: (function(data){
+            // text that labels the UV index button
+            var currentUV = $("<p>").text("UV Index: ");
+            // adds the UV index button
+            var uvButton = $("<button>").addClass("button").text(data.value);
+            // adds the UV index value to the button
+            currentUV.append(uvButton)
+            // adds all the weather info to the card body
+            cardInfo.append(currentCity, currentTemp, currentHumid, currentWind, currentUV);
+            // adds the card body's info to the card
+            addCard.append(cardInfo);
+
+            // changes UV button colors based on UV index value
+            // red - severe
+            if(data.value >= 6.65){
+              uvButton.addClass("btn btn-danger");
+            }
+            // yellow - moderate
+            else if(data.value < 6.65 && data.value > 3.34) {
+              uvButton.addClass("btn btn-warning");
+            }
+            // green - favorable
+            else {
+              uvButton.addClass("btn btn-success");
+            }
+
         })
+      })
     })
   })
+  
 
   // five day forecast function
   function getFiveDay(input){
