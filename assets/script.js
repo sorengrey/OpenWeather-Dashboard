@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   // search button function
-  $("#search-button").on("click", function(input){
+  $("#searchbutton").on("click", function(input){
 
     // sets what the user searched for as a variable
     var input = $("#search").val();
