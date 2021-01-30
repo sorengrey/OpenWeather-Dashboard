@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     // sets the locally stored cities to list elements 
     var history = $("<li>").addClass("list-group-item list-group-item-action").text(localStorage.getItem("city:"))
+
     // adds new list elements to the beginning of the history list
     $(".historylist").prepend(history);
 
@@ -20,12 +21,15 @@ $(document).ready(function() {
      url: "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
      dataType: "json",
      success: (function(data){
-      // empties the current day's weather div if there is already a city listed
+      // empties the current day's div if there is already a city listed
       $(".currentday").empty();
-      // variables for the current weather conditions
+
+      // variables for the UV index URL parameters
       var latitude = data.coord.lat;
       var longitude = data.coord.lon;
-      var currentCity = $("<h2>").addClass("card-current").text(data.name);
+
+      // variables for the current weather conditions
+      var currentCity = $("<h2>").addClass("card-current").text(data.name + " (" + new Date().toLocaleDateString() + ")");
       var currentTemp = $("<p>").text("Temperature: " + data.main.temp + "°F");
       var currentHumid = $("<p>").text("Humidity: " + data.main.humidity + "%");
       var currentWind = $("<p>").text("Wind Speed: " + data.wind.speed + "MPH");
@@ -39,32 +43,32 @@ $(document).ready(function() {
      
       // adds the card to the currentday div
       $(".currentday").append(addCard);
-      // 
+
+      // ajax call that gets the UV info
       $.ajax({
         type: "GET",
         url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=77d824887f06ac6836449d9d10feb418",
         dataType: "json",
         success: (function(data){
-          console.log(data.value);
-          // var UV = da/ta.value;
+          // gets UV index value and sets it as a variable
           var currentUV = $("<p>").text("UV Index: " + data.value);
           // adds all the weather info to the card body
          cardInfo.append(currentCity, currentTemp, currentHumid, currentWind, currentUV);
           // adds the card body's info to the card
          addCard.append(cardInfo);
          })
-})
-     })
+        })
     })
+  })
 
-// five day forecast function
-function getFiveDay(input){
-  // ajax call that gets the city's five-day forecast
-  $.ajax({
-     type: "GET",
-     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
-     dataType: "json",
-     success: (function(data){
+  // five day forecast function
+  function getFiveDay(input){
+    // ajax call that gets the city's five-day forecast
+    $.ajax({
+      type: "GET",
+      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&appid=77d824887f06ac6836449d9d10feb418&units=imperial",
+      dataType: "json",
+      success: (function(data){
        // deletes forecasts from the previous search
        $(".fiveday").empty();
        // loops through the forecast object to add cards
@@ -73,7 +77,6 @@ function getFiveDay(input){
         if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
           // gets the date
           var todaysDate = new Date(data.list[i].dt_txt).toLocaleDateString();
-          console.log(todaysDate)
            // card
           var fiveCard = $("<div>").addClass("card bg-primary mb-3 text-white");
            // card body
